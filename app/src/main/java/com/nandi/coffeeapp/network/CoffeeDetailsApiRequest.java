@@ -5,6 +5,7 @@ import com.octo.android.robospice.request.retrofit.RetrofitSpiceRequest;
 
 /**
  * Created by nandi_000 on 09-11-2015.
+ * Api request to fetch particular coffee details using the coffee id
  */
 public class CoffeeDetailsApiRequest extends RetrofitSpiceRequest<CoffeeDetails,CoffeeApi> {
 

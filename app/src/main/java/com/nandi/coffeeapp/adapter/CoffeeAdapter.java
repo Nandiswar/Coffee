@@ -21,10 +21,14 @@ import java.util.List;
 /**
  * Created by nandi_000 on 10-11-2015.
  */
+/**
+ * Provide views to ListView with data from coffees.
+ */
 public class CoffeeAdapter extends ArrayAdapter<Coffee> implements AdapterView.OnItemClickListener {
 
     private Context context;
     private List<Coffee> coffees;
+    // layout holding each child view in the listview
     private final int ROW_LAYOUT_ID;
 
     public CoffeeAdapter(Context context, int resource, List<Coffee> coffeeList) {
@@ -45,10 +49,14 @@ public class CoffeeAdapter extends ArrayAdapter<Coffee> implements AdapterView.O
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        // fetch the coffee item from the coffees list based on position
         Coffee coffee = coffees.get(position);
         holder.coffeeNameView.setText(coffee.name);
         holder.coffeeDescView.setText(coffee.desc);
         String imgUrl = coffee.image_url;
+
+        // hide the imageview if img url is empty else load it using Picasso
         if(!imgUrl.equals("")) {
             imgUrl = imgUrl.replace("http://", "https://");
             Uri uri = Uri.parse(imgUrl);
@@ -57,13 +65,6 @@ public class CoffeeAdapter extends ArrayAdapter<Coffee> implements AdapterView.O
         } else {
             holder.imageView.setVisibility(View.GONE);
         }
-        /*holder.detailsClick.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DetailsActivity.class);
-                context.startActivity(intent);
-            }
-        });*/
         return convertView;
     }
 
@@ -72,7 +73,6 @@ public class CoffeeAdapter extends ArrayAdapter<Coffee> implements AdapterView.O
         Coffee coffee = coffees.get(position);
         Intent intent = new Intent(context, DetailsActivity.class);
         intent.putExtra("coffeeId", coffee.id);
-        intent.putExtra("coffeeImgUrl", coffee.image_url);
         context.startActivity(intent);
     }
 

@@ -15,5 +15,5 @@
         android:textStyle="bold"
         android:drawableLeft="@drawable/ic_colored_logo"
         android:gravity="center"
-        android:textAppearance="?android:textAppearanceMedium"/>
+        android:textAppearance="?android:textAppearanceLarge"/>
 </RelativeLayout>

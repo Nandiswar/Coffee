@@ -35,15 +35,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        // custom action bar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(R.layout.custom_title_view);
-
-        /*ImageView im = (ImageView) findViewById(R.id.picassoImage);
-        String url = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Affogato.JPG/800px-Affogato.JPG";
-        Picasso.with(this).load(url).into(im);*/
-
+        // initialize the views
         bindViews();
     }
 
@@ -56,8 +52,12 @@ public class MainActivity extends AppCompatActivity {
         adapter = new CoffeeAdapter(this, R.layout.coffee_row_item, coffees);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(adapter);
+
+        // create a api request
         request = new CoffeeListRequest();
+        // display a loading bar
         showProgressDialog();
+        // execute the request and tie up a request listener - CoffeeListRequestListener
         spiceManager.execute(request, "Coffee List", DurationInMillis.ONE_MINUTE, new CoffeeListRequestListener());
     }
 
@@ -89,10 +89,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onRequestSuccess(CoffeeList coffees) {
             closeProgressDialog();
+            // update the list view
             updateCoffeeList(coffees);
         }
     }
 
+
+    /*
+    * dismiss the loading bar
+     */
     private void closeProgressDialog() {
         if(progressDialog.isShowing()) {
             progressDialog.dismiss();
@@ -100,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateCoffeeList(CoffeeList coffeeList) {
+        coffees.clear();
         for(Coffee coffee: coffeeList) {
             coffees.add(coffee);
         }

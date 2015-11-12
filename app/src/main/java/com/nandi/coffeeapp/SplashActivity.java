@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class SplashActivity extends AppCompatActivity {
-
+    // splash screen time out
     private static final int TIME_OUT = 2000;
 
     @Override

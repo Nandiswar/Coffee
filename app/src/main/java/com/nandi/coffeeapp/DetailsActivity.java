@@ -1,6 +1,7 @@
 package com.nandi.coffeeapp;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,27 +36,35 @@ public class DetailsActivity extends AppCompatActivity {
     private TextView coffeeDescView;
     private ImageView coffeeImgView;
     private TextView coffeeStatusText;
-    private String url;
     private ProgressDialog progressDialog;
+    private String coffeeName;
+    private boolean isShareEnabled;
+    private String imgUrl;
+    private String coffeeDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-
+        // initialize views
         bindViews();
 
+        // fetch the values shared through intent
         Bundle bundle = getIntent().getExtras();
         if(bundle != null) {
             String coffeeId = bundle.getString("coffeeId");
-            url = bundle.getString("coffeeImgUrl");
-            url = url.replace("http://", "https://");
+            // create a api request to fetch coffee details using the coffee id
             detailsApiRequest = new CoffeeDetailsApiRequest(coffeeId);
+            // show a loading dialog when request is made
             showProgressDialog();
+            // execute api request and tie up a request listener - DetailsRequestListener
             spiceManager.execute(detailsApiRequest, coffeeId, DurationInMillis.ONE_MINUTE, new DetailsRequestListener());
         }
     }
 
+    /*
+    * display a loading bar
+     */
     private void showProgressDialog() {
         if(!progressDialog.isShowing()) {
             progressDialog.show();
@@ -69,9 +78,11 @@ public class DetailsActivity extends AppCompatActivity {
         coffeeStatusText = (TextView) findViewById(R.id.statusText);
         progressDialog = new ProgressDialog(this, R.style.dialogTheme);
 
+        // customizing the actionbar
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setCustomView(R.layout.custom_details_title_view);
+
         View customView = actionBar.getCustomView();
         ImageView backClick = (ImageView) customView.findViewById(R.id.backImgView);
         backClick.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +91,31 @@ public class DetailsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        // share feature
+        final TextView share = (TextView) customView.findViewById(R.id.shareView);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // enable share feature only upon successful api call
+                if(isShareEnabled) {
+                    shareIntent();
+                } else {
+                    return;
+                }
+            }
+        });
+    }
+
+    /*
+    * share the coffee details
+     */
+    private void shareIntent() {
+        String shareText = coffeeName + "\n" + coffeeDesc + "\n" + imgUrl;
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+        shareIntent.setType("text/plain");
+        startActivity(Intent.createChooser(shareIntent, getResources().getText(R.string.send_to)));
     }
 
     @Override
@@ -106,18 +142,28 @@ public class DetailsActivity extends AppCompatActivity {
         public void onRequestSuccess(CoffeeDetails coffeeDetails) {
             closeProgressDialog();
             if(coffeeDetails != null) {
-                coffeeTitleView.setText(coffeeDetails.name);
-                coffeeDescView.setText(coffeeDetails.desc);
+                coffeeName = coffeeDetails.name;
+                coffeeDesc = coffeeDetails.desc;
+                imgUrl = coffeeDetails.image_url;
+                // set the fetched values to views
+                coffeeTitleView.setText(coffeeName);
+                coffeeDescView.setText(coffeeDesc);
 
+                imgUrl = imgUrl.replace("http://", "https://");
+                Picasso.with(DetailsActivity.this).load(Uri.parse(imgUrl)).into(coffeeImgView);
+                isShareEnabled = true;
+                // find the last update status from last_updated_at value
                 String updateStatus = Constants.checkUpdateStatus(coffeeDetails.last_updated_at);
                 if(updateStatus != null) {
                     coffeeStatusText.setText(updateStatus);
                 }
-                Picasso.with(DetailsActivity.this).load(Uri.parse(url)).into(coffeeImgView);
             }
         }
     }
 
+    /*
+    * dismiss the loading bar
+     */
     private void closeProgressDialog() {
         if(progressDialog.isShowing()) {
             progressDialog.dismiss();

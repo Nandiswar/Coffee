@@ -6,6 +6,7 @@ import com.octo.android.robospice.request.retrofit.RetrofitSpiceRequest;
 
 /**
  * Created by nandi_000 on 10-11-2015.
+ * Api request to fetch list of coffees
  */
 public class CoffeeListRequest extends RetrofitSpiceRequest<CoffeeList,CoffeeApi> {
 

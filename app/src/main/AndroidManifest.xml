@@ -25,16 +25,13 @@
             android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity
             android:name=".DetailsActivity"
+            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"/>
 
         <service
             android:name=".service.CoffeeSpiceService"
             android:exported="false" />
 
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

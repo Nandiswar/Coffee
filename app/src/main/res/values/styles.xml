@@ -12,20 +12,21 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
+<!-- Custom TextView Style for coffee title -->
     <style name="titleTextStyle" parent="@android:style/TextAppearance">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/textDarkGray</item>
         <item name="android:typeface">sans</item>
     </style>
+    <!-- Custom TextView Style for coffee details -->
     <style name="descTextStyle" parent="@android:style/TextAppearance">
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/textGray</item>
-        <item name="android:maxLines">2</item>
         <item name="android:typeface">sans</item>
     </style>
+    <!-- view divider style -->
     <style name="Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">2dp</item>
@@ -34,6 +35,7 @@
     </style>
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!-- custom loading bar with no background -->
     <style name="dialogTheme" parent="android:Theme.Holo.Dialog">
         <item name="android:alertDialogStyle">@style/CustomDialogStyle</item>
         <item name="android:windowBackground">@color/transparent</item>

@@ -8,9 +8,15 @@ import java.util.Date;
  * Created by nandi_000 on 10-11-2015.
  */
 public class Constants {
+    // api key to authenticate the api call
     public static final String API_KEY = "WuVbkuUsCXHPx3hsQzus4SE";
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 
+    /**
+     * function to check how old the passed date is from current date
+     * @param updateDate
+     * @return last updated status
+     */
     public static String checkUpdateStatus(String updateDate) {
         updateDate = updateDate.substring(0, updateDate.length()-4);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT);

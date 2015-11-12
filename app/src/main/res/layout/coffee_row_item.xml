@@ -14,29 +14,28 @@
         <TextView
             android:id="@+id/coffeName"
             style="@style/titleTextStyle"
-            android:fontFamily="sans-serif"
             android:paddingTop="16dp" />
 
         <TextView
             android:id="@+id/coffeeDesc"
             style="@style/descTextStyle"
-            android:fontFamily="sans-serif"
-            android:paddingBottom="10dp"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingBottom="10dp" />
 
         <ImageView
             android:id="@+id/coffeeImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true" />
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/nextClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:paddingTop="16dp"
-        android:id="@+id/nextClick"
-        android:src="@drawable/ic_action_next_arrow"
-        android:layout_weight="1"/>
+        android:src="@drawable/ic_action_next_arrow" />
 
 </LinearLayout>

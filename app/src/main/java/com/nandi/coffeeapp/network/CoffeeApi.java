@@ -10,6 +10,7 @@ import retrofit.http.Path;
 
 /**
  * Created by nandi_000 on 10-11-2015.
+ * List of api's made by the app and show return type for each api call
  */
 public interface CoffeeApi {
 
